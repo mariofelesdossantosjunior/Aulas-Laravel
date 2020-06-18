@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Serie;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\Echo_;
 
 class SeriesController extends Controller
 {
-    public function listarSeries(Request $request){
-        $series = Serie::all();
+    public function listarSeries(Request $request)
+    {
+        $series = Serie::query()->orderBy('nome')->get();
 
-        return view('series.index', compact('series'));
+        $mensagem = $request->session()->get('mensagem');
+
+        return view('series.index', compact('series', 'mensagem'));
     }
 
     public function create()
@@ -19,15 +21,12 @@ class SeriesController extends Controller
         return view('series.create');
     }
 
-    public function store(Request $request){
-        $nome = $request->nome;
-        /* $serie = new Serie();
-        $serie->nome = $nome;
-        $serie->save(); */
-        $serie = Serie::create([
-            'nome' => $nome
-        ]);
+    public function store(Request $request)
+    {
+        $serie = Serie::create($request->all());
 
-        echo "Registro {$serie->id} salvo com sucesso: {$serie->nome}";
+        $request->session()->flash('mensagem', "Registro {$serie->id} salvo com sucesso: {$serie->nome}");
+
+        return redirect('/series');
     }
 }
