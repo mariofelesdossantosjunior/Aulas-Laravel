@@ -29,4 +29,11 @@ class SeriesController extends Controller
 
         return redirect('/series');
     }
+
+    public function destroy(Request $request)
+    {
+        Serie::destroy($request->id);
+        $request->session()->flash('mensagem', "Registro excluido com sucesso");
+        return redirect('/series');
+    }
 }
