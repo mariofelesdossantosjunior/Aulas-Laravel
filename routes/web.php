@@ -16,10 +16,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/series', 'SeriesController@listarSeries');
-Route::get('/series/criar', 'SeriesController@create');
-Route::post('/series/criar', 'SeriesController@store');
-Route::post('/series/remover/{id}', 'SeriesController@destroy');
+Route::get('/series', 'SeriesController@index')->name('serie.listar');
+Route::get('/series/criar', 'SeriesController@create')->name('serie.criar');
+Route::post('/series/adicionar', 'SeriesController@store')->name('serie.adicionar');
+Route::post('/series/remover/{id}', 'SeriesController@destroy')->name('serie.remover');
 
 Route::get('/categorias', 'CategoriasController@listarCategorias');
 Route::get('/categorias/criar', 'CategoriasController@create');

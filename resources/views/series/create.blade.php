@@ -5,7 +5,7 @@ Adicionar Series
 
 @section('conteudo')
 
-        <form method="post">
+        <form action="{{route('serie.adicionar')}}" method="post">
             @csrf
             <div class="form-group">
               <label for="nome">Nome:</label>
