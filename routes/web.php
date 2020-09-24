@@ -33,3 +33,5 @@ Route::get('/premios/criar', 'PremiosController@create');
 Route::get('/status', 'StatusController@listarStatus');
 Route::get('/status/criar', 'StatusController@create');
 
+Route::get('/series/{serieId}/temporadas', 'TemporadasController@index');
+
