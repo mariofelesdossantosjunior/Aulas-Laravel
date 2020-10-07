@@ -2,27 +2,60 @@
 
 namespace App\Services;
 
+use App\Episodio;
 use App\Serie;
+use App\Temporada;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SeriesService
 {
     public function criarSerie(Request $request): Serie
     {
-        $serie = Serie::create($request->all());
+        //DB::beginTransaction();
+        $serie = new Serie();
 
-        $qtdTemporadas = $request->qtd_temporadas;
-        $episodiosPorTemporada = $request->episodios_por_temporada;
+        DB::transaction(function () use (&$serie, $request) {
 
-        for ($t = 1; $t <= $qtdTemporadas; $t++) {
+            $serie = Serie::create($request->all());
 
-            $temporada = $serie->temporadas()->create(['numero' => $t]);
+            $qtdTemporadas = $request->qtd_temporadas;
+            $episodiosPorTemporada = $request->episodios_por_temporada;
 
-            for ($e = 1; $e <= $episodiosPorTemporada; $e++) {
-                $temporada->episodios()->create(['numero' => $e]);
+            for ($t = 1; $t <= $qtdTemporadas; $t++) {
+
+                $temporada = $serie->temporadas()->create(['numero' => $t]);
+
+                for ($e = 1; $e <= $episodiosPorTemporada; $e++) {
+                    $temporada->episodios()->create(['numero' => $e]);
+                }
             }
-        }
+        });
+
+        //DB::commit();
 
         return $serie;
+    }
+
+    public function removeSerie(int $id)
+    {
+        $serie = Serie::find($id);
+        $nomeSerie = $serie->nome;
+
+        DB::transaction(function () use ($serie, $id) {
+
+            $serie->temporadas()->each(function (Temporada $temporada) {
+                $temporada->episodios()->each(function (Episodio $episodio) {
+                    $episodio->delete();
+                });
+                $temporada->delete();
+            });
+
+            $serie->delete();
+
+            Serie::destroy($id);
+        });
+
+        return $nomeSerie;
     }
 }

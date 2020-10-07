@@ -5,6 +5,17 @@ Adicionar Series
 
 @section('conteudo')
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 <form action="{{route('serie.adicionar')}}" method="post">
     @csrf
     <div class="row">
