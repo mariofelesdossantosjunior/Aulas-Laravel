@@ -38,4 +38,12 @@ class SeriesController extends Controller
         $request->session()->flash('mensagem', "Serie {$nomeSerie} excluido com sucesso");
         return redirect()->route('serie.listar');
     }
+
+    public function editarNome(int $id, Request $request)
+    {
+        $novoNome = $request->nome;
+        $serie = Serie::find($id);
+        $serie->nome = $novoNome;
+        $serie->save();
+    }
 }

@@ -8,8 +8,14 @@ Temporadas da série {{$serie->nome}}
 
 <ul class="list-group">
     @foreach ($serie->temporadas as $temporada)
-    <li class="list-group-item">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+
+        <a href="/temporadas/{{$temporada ->id }}/episodios">
         Temporada {{ $temporada->numero }}
+        </a>
+        <span class="badge badge-primary">
+           ? / {{ $temporada->episodios->count() }}
+        </span>
     </li>
     @endforeach
 </ul>

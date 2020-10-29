@@ -20,6 +20,7 @@ Route::get('/series', 'SeriesController@index')->name('serie.listar');
 Route::get('/series/criar', 'SeriesController@create')->name('serie.criar');
 Route::post('/series/adicionar', 'SeriesController@store')->name('serie.adicionar');
 Route::post('/series/remover/{id}', 'SeriesController@destroy')->name('serie.remover');
+Route::post('/series/{id}/editarNome', 'SeriesController@editarNome')->name('serie.editarNome');
 
 Route::get('/categorias', 'CategoriasController@listarCategorias');
 Route::get('/categorias/criar', 'CategoriasController@create');
@@ -34,4 +35,6 @@ Route::get('/status', 'StatusController@listarStatus');
 Route::get('/status/criar', 'StatusController@create');
 
 Route::get('/series/{serieId}/temporadas', 'TemporadasController@index');
+
+Route::get('/temporadas/{temporada}/episodios', 'EpisodiosController@index');
 
