@@ -6,6 +6,8 @@ Temporadas da série {{$serie->nome}}
 
 @section('conteudo')
 
+@include('error', ['errors' => $errors])
+
 <ul class="list-group">
     @foreach ($serie->temporadas as $temporada)
     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -14,7 +16,7 @@ Temporadas da série {{$serie->nome}}
         Temporada {{ $temporada->numero }}
         </a>
         <span class="badge badge-primary">
-           ? / {{ $temporada->episodios->count() }}
+           {{ $temporada-> getEpisodiosAssistidos()->count()}} / {{ $temporada->episodios->count() }}
         </span>
     </li>
     @endforeach

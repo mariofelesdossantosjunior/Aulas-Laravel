@@ -5,11 +5,7 @@ Series
 
 @section('conteudo')
 
-@if(!empty($mensagem))
-<div class="alert alert-success">
-    {{ $mensagem }}
-</div>
-@endif
+@include('mensagem')
 
 <a href="{{route('serie.criar')}}" class="btn btn-dark mb-2"><i class="fas fa-plus"></i> Adicionar</a>
 
